@@ -1,11 +1,12 @@
 package scrap.heap.refactor;
 
+// I chose a class for each entity, that could look excessive for given task. Idea was to approach task as king of real world solution
+// which is to be extended to represent entities in real systems.
 // It could be enums, or simple strings, but all enities are better to be classes for possibilty of extending.
 // Cake's color and balloons colors might not be from the same set;
 // Colors could be custom and couldn't be presented in RGB color scheme
 // We probably don't want to hardcode colors and flavors. They might be configured in DB or even external service
 // Given all that, class per entity design approach is chosen
-
 
 public class App {
     public String getGreeting() {
