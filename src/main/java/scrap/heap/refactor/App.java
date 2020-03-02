@@ -1,5 +1,12 @@
 package scrap.heap.refactor;
 
+// It could be enums, or simple strings, but all enities are better to be classes for possibilty of extending.
+// Cake's color and balloons colors might not be from the same set;
+// Colors could be custom and couldn't be presented in RGB color scheme
+// We probably don't want to hardcode colors and flavors. They might be configured in DB or even external service
+// Given all that, class per entity design approach is chosen
+
+
 public class App {
     public String getGreeting() {
         return "Hello world.";
@@ -7,32 +14,26 @@ public class App {
 
     public static void main(String[] args) {
 
-         //Place birthday party orders
-         order("red", "mylar", "4", "chocolate", "chocolate", "circle", "large", "brown" );
-         order("blue", "latex", "7", "Vanilla", "chocelate", "square", "med", "brown" );
-         order("yellow", "mylar", "4", "vanilla", "vanilla", "square", "small", "yellow" );
+	Order order = Order.getBuilder()
+			.addBalloons(Balloon.createBalloon(BalloonColor.fromString("red"), BalloonMaterial.fromString("mylar")), 4)
+			.addCake(Cake.createCake(CakeFlavor.fromString("chocolate"), CakeFrostingFlavor.fromString("chocolate"), 
+					CakeColor.fromString("brown"), CakeShape.fromString("circle"), CakeSize.fromString("large")))
+			.build();
+	order.place();
 
+	order = Order.getBuilder()
+			.addBalloons(Balloon.createBalloon(BalloonColor.fromString("blue"), BalloonMaterial.fromString("latex")), 7)
+			.addCake(Cake.createCake(CakeFlavor.fromString("Vanilla"), CakeFrostingFlavor.fromString("chocelate"),
+					CakeColor.fromString("yellow"), CakeShape.fromString("square"), CakeSize.fromString("med")))
+			.build();
+	order.place();
+
+	order = Order.getBuilder()
+			.addBalloons(Balloon.createBalloon(BalloonColor.fromString("yellow"), BalloonMaterial.fromString("mylar")), 4)
+			.addCake(Cake.createCake(CakeFlavor.fromString("vanilla"), CakeFrostingFlavor.fromString("vanilla"),
+					CakeColor.fromString("yellow"), CakeShape.fromString("square"), CakeSize.fromString("small")))
+			.build();
+	order.place();
+	
     }
-
-    private static void order(String balloonColor, String material, String number, String flavor, String frostingFlavor, String shape, String size, String cakeColor){
-
-        orderBalloons(balloonColor, material, number);
-
-        orderCake(frostingFlavor, flavor, shape, size, cakeColor);
-    }
-
-    private static void orderBalloons(String balloonColor, String material, String number){
-
-        //for the purposes of this exercise, pretend this method works and adds balloons to the order
-        System.out.println("Balloons ordered; " + balloonColor + ", " + material  + ", " + number);
-
-    }
-
-    private static void orderCake(String flavor, String frostingFlavor, String shape, String size, String cakeColor){
-
-        //for the purposes of this exercise, pretend that this method adds a cake to the order
-        System.out.println("cake ordered; " + flavor + ", " + frostingFlavor  + ", " + shape + ", " + size + ", " + cakeColor);
-
-    }
-
 }
